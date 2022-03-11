@@ -1,17 +1,21 @@
 {
-  "name": "telegram_base",
+  "name": "telegram_uploader",
   "version": "1.0.0",
-  "description": "Base telegram client with authentication only.",
-  "main": "src/app.js",
+  "description": "Telegram client to upload videos dropped in a folder.",
+  "main": "src/uploader/index.js",
   "scripts": {
-    "login": "node src/auth/index"
+    "login": "node src/auth/index",
+    "channels": "node src/uploader/get-channels",
+    "uploader": "node src/uploader/index"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chokidar": "^3.5.3",
     "cli-color": "^2.0.1",
     "dotenv": "^16.0.0",
+    "fluent-ffmpeg": "^2.1.2",
     "mtproton": "^6.0.0",
     "prompt-sync": "^4.2.0"
   }

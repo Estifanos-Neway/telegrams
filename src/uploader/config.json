@@ -1,0 +1,20 @@
+{
+    "absolute_path": false,
+    "source_path": "medias/source",
+    "target_path": "medias/target",
+    "thumb_path": "medias/thumbnails",
+    "supported_extensions": {
+        ".mp4": "video/mp4"
+    },
+    "supported_thumbnail_extensions": [
+        ".png",
+        ".jpg"
+    ],
+    "preview_location": "2%",
+    "channel": {
+        "channel_id": "1608780817",
+        "access_hash": "11254040540575976897"
+    },
+    "include_name": true,
+    "custom_thumbnail":true
+}
