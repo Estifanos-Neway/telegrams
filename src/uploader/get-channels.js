@@ -4,7 +4,7 @@ const mtproton = require('mtproton');
 const color = require("cli-color");
 
 const { getSessionDataFile, checkAuth, getLogTime } = require('../commons/functions');
-const { login_first_text } = require('./variables');
+const { login_first_text } = require('../commons/variables');
 
 // configuring 'dotenv'
 require("dotenv").config();

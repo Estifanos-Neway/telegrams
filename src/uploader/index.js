@@ -15,7 +15,7 @@ const {
 
 const config = require("./config.json");
 const { getSessionDataFile, getLogTime, checkAuth } = require('../commons/functions.js');
-const { login_first_text } = require('./variables');
+const { login_first_text } = require('../commons/variables');
 if (!config.absolute_path) {
     config.source_path = path.resolve(__dirname, config.source_path);
     config.target_path = path.resolve(__dirname, config.target_path);
