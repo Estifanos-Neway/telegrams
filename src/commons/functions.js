@@ -2,6 +2,10 @@
 // common functions for all apps
 
 const path = require('path');
+const mtproton = require("mtproton");
+
+// configuring 'dotenv'
+require("dotenv").config();
 
 const {
     default_user_file,
@@ -19,6 +23,24 @@ exports.getLogTime = () => {
     now = now.split(".")[0];
     now = now.substring(now.indexOf(":") + 1, now.lastIndexOf(":"))
     return "[" + now + "]";
+}
+
+// returns mtproton object
+exports.getMtproton = async () => {
+    let session_data_file = this.getSessionDataFile();
+
+    // getting api_id and api_hash
+    const api_id = process.env.API_ID;
+    const api_hash = process.env.API_HASH;
+
+    // mtp is the mtproton object we will be using to communicate with tdlib
+    return new mtproton({
+        api_id,
+        api_hash,
+        storageOptions: {
+            path: path.resolve(__dirname, session_data_file)
+        },
+    });
 }
 
 // Checks if there is a logged in user or not
