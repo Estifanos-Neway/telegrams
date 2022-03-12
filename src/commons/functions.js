@@ -26,7 +26,7 @@ exports.getLogTime = () => {
 }
 
 // returns mtproton object
-exports.getMtproton = async () => {
+exports.getMtproton = () => {
     let session_data_file = this.getSessionDataFile();
 
     // getting api_id and api_hash
