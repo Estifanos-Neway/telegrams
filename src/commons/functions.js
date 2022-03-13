@@ -68,6 +68,7 @@ exports.getSessionDataFile = () => {
     }
     return path.resolve(session_data_dir, user_file + ".json");
 }
+
 // Returns the current user
 exports.getMe = async (mtproton) => {
     let params = { id: { _: 'inputUserSelf' } };
@@ -79,6 +80,58 @@ exports.getMe = async (mtproton) => {
         } else {
             return { success: false, reason: userFull };
         }
+    } catch (error) {
+        return { success: false, reason: error };
+    }
+}
+
+// Returns users from the given message id
+const getSenderInfo = async (mtproton, message_id) => {
+    let params = { id: [{ _: "inputMessageID", id: message_id }] };
+    try {
+        let message = await mtproton.call("messages.getMessages", params);
+        let access_hash, id, first_name;
+        for (let user of message.users) {
+            if (!user.self) {
+                ({ access_hash, id, first_name } = user);
+                break;
+            }
+        }
+        if (access_hash && id && first_name) {
+            return { success: true, result: { access_hash, id, first_name } };
+        } else {
+            return { success: false, reason: message };
+        }
+    } catch (error) {
+        return { success: false, reason: error };
+    }
+}
+exports.getSenderInfo = getSenderInfo;
+
+// Sends a text message to the given user
+exports.sendTextMessage = async (mtproton, options) => {
+    let user_id = options?.user_id;
+    let access_hash = options?.access_hash;
+    let message_id = options?.message_id;
+    let message = options?.message;
+    if (!access_hash && !message_id) {
+        return { success: false, reason: "BOTH_ACCESS_HASH_AND_MESSAGE_ID_NOT_SPECIFIED" };
+    }
+    if (!message) {
+        return { success: false, reason: "MESSAGE_NOT_SPECIFIED" };
+    }
+    if (!access_hash || !user_id) {
+        let senderInfo = await getSenderInfo(mtproton, message_id);
+        if (!senderInfo.success) {
+            return senderInfo;
+        }
+        ({ access_hash, id:user_id } = senderInfo.result);
+    }
+    let random_id = Math.round(Math.random() * 1000);
+    let params = { peer: { _: "inputPeerUser", user_id, access_hash }, message, random_id };
+    try {
+        let result = await mtproton.call("messages.sendMessage", params);
+        return { success: true, result };
     } catch (error) {
         return { success: false, reason: error };
     }
