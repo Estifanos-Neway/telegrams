@@ -4,7 +4,8 @@
   "description": "Base telegram client with authentication only.",
   "main": "src/app.js",
   "scripts": {
-    "login": "node src/auth/index"
+    "login": "node src/auth/index",
+    "movies": "node src/movies/index"
   },
   "keywords": [],
   "author": "",
@@ -14,5 +15,8 @@
     "dotenv": "^16.0.0",
     "mtproton": "^6.0.0",
     "prompt-sync": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.21"
   }
 }
