@@ -19,7 +19,7 @@ Used as in-file database.
 
 - **users-data** | Store users data.
   - **users** | Store json files named after user_ids, each file contains detailed information about the user.
-- **movies-data** | [NOT_STRUCTURED_YET]
+- **movies-data** | [NOT_DEALT_WITH_YET]
 - **modules** | Modules to be used in the app
   - **user** | A class to deal with users data, well defined in [entities](#entities) section.
 
@@ -52,15 +52,15 @@ A class to deal with users data, defined in [modules/user.json](modules/user.js)
 - country
 - phone
 - confirmed | _default: false_
-- verified | _default: true_
+- approved | _default: true_
 - blocked | _default: false_
 
 **Methods**
 
 - constructor(id)
-- static isRegistered(id)
+- isRegistered()
 - get id()
-- get basicInfo()
+- get contactInfo()
 - get fullInfo()
 - save()
 
@@ -86,4 +86,5 @@ A class to deal with users data, defined in [modules/user.json](modules/user.js)
 
     1.2 **Chat_Id Out of Range** | Tell they can't be served
 
-2.  **New Outgoing Channel Message**
+2.  **New Outgoing Private Chat** | [NOT_DEALT_WITH_YET]
+3.  **New Outgoing Channel Message** | [NOT_DEALT_WITH_YET]

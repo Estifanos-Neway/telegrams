@@ -1,9 +1,45 @@
 {
     "userIdRange": {
         "min": "1",
-        "max": "200000000"
+        "max": "400000000"
     },
-    "messageTexts": {
-        "userIdOutOfRangeMessage": "Sorry we can't serve you since your id is out of our range."
+    "validations":{
+        "minAge":0
+    },
+    "serviceMessageTexts": {
+        "youAreBlockedMessage": "Sorry, we can't serve you since you are blocked by the admin.",
+        "yourIdIsOutOfRangeMessage": "Sorry we can't serve you since your id is out of our range.",
+        "waitForAdminApproval": "Please wait until an admin approves you.",
+        "notReplied": "You haven't replied to the last question."
+    },
+    "registrationMessages": {
+        "welcome": {
+            "text": "welcome to chat, please let me know your real name",
+            "code": "welcome",
+            "next": "age"
+        },
+        "age": {
+            "text": "Hi, %name%, may I know how old are you?",
+            "code": "age",
+            "next": "country"
+        },
+        "country": {
+            "text": "where do you live?",
+            "code": "country",
+            "next": "phone"
+        },
+        "phone": {
+            "text": "whats your phone number?",
+            "code": "phone",
+            "next":"confirm"
+        },
+        "confirm": {
+            "text": "This is your information:\n\n%contactInfo%\n\nDo you confirm? [Yes | No]",
+            "code": "confirm"
+        }
+    },
+    "noteMessages": {
+        "tag": "NOTE:",
+        "replay": "Answer messages must be replies for the question message."
     }
 }
