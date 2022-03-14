@@ -1,23 +1,23 @@
 
 const path = require("path");
-const fs = require("fs")
+const fs = require("fs");
 const {
     users_dir } = require("../variables.js")
 
 class User {
-    #id
+    #id;
+    name;
+    country;
+    phone;
+    confirmed = false;
+    verified = true;
+    blocked = true;
 
     static isRegistered(id) {
-        return fs.existsSync(path.resolve(users_dir, id + ".json"))
+        return fs.existsSync(path.resolve(users_dir, id + ".json"));
     }
 
     constructor(id) {
-        this.name = undefined;
-        this.country = undefined;
-        this.phone = undefined;
-        this.confirmed = false;
-        this.verified = true;
-        this.blocked = true;
         if (User.isRegistered(id)) {
             let user_file_path = path.resolve(users_dir, id + ".json");
             let user_data = require(user_file_path);

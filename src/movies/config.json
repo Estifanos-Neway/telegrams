@@ -1,0 +1,9 @@
+{
+    "userIdRange": {
+        "min": "1",
+        "max": "200000000"
+    },
+    "messageTexts": {
+        "userIdOutOfRangeMessage": "Sorry we can't serve you since your id is out of our range."
+    }
+}
