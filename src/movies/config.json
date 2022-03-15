@@ -4,38 +4,42 @@
         "max": "400000000"
     },
     "validations":{
-        "minAge":0
+        "minAge":1
     },
     "serviceMessageTexts": {
-        "youAreBlockedMessage": "Sorry, we can't serve you since you are blocked by the admin.",
-        "yourIdIsOutOfRangeMessage": "Sorry we can't serve you since your id is out of our range.",
+        "welcomeMessage":"Welcome to chat.",
+        "successfulRegistration":"You are successfully registered. The service will be started soon.",
+        "restartRegistration":"Ok, we will restart the registration.",
+        "youAreBlockedMessage": "Sorry, we can't serve you. [blocked by the admin]",
+        "yourIdIsOutOfRangeMessage": "Sorry we can't serve. [id out of our range]",
         "waitForAdminApproval": "Please wait until an admin approves you.",
-        "notReplied": "You haven't replied to the last question."
+        "notReplied": "You haven't replied to the last question.",
+        "tryAgain":"Please try again [%reason%]"
     },
     "registrationMessages": {
-        "welcome": {
-            "text": "welcome to chat, please let me know your real name",
-            "code": "welcome",
+        "name": {
+            "text": "Please let me know your real name",
+            "field": "name",
             "next": "age"
         },
         "age": {
-            "text": "Hi, %name%, may I know how old are you?",
-            "code": "age",
+            "text": "Hi %name%, may I know how old you are?",
+            "field": "age",
             "next": "country"
         },
         "country": {
             "text": "where do you live?",
-            "code": "country",
+            "field": "country",
             "next": "phone"
         },
         "phone": {
             "text": "whats your phone number?",
-            "code": "phone",
+            "field": "phone",
             "next":"confirm"
         },
         "confirm": {
-            "text": "This is your information:\n\n%contactInfo%\n\nDo you confirm? [Yes | No]",
-            "code": "confirm"
+            "text": "This is your information:\n\n%contactInfo%\nDo you confirm? [Yes | No]",
+            "field": "confirm"
         }
     },
     "noteMessages": {

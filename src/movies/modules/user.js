@@ -1,9 +1,15 @@
 
 const path = require("path");
 const fs = require("fs");
+const color = require("cli-color");
 const {
-    users_dir } = require("../variables.js");
-const { validations } = require("../config.json");
+    getLogTime } = require(path.resolve("src/commons/functions.js"));
+const {
+    users_dir } = require(path.resolve("src/movies/variables.js"));
+
+const {
+    validations,
+    serviceMessageTexts } = require(path.resolve("src/movies/config.json"));
 
 class User {
     #id;
@@ -56,7 +62,7 @@ class User {
         return fullInfo
     }
 
-    async sendMessage(mtproton, content, options) {
+    async sendMessage(mtproton, content) {
         if (!content) {
             return { success: false, reason: "CONTENT_NOT_SPECIFIED" };
         }
@@ -64,7 +70,7 @@ class User {
         if (!type) {
             return { success: false, reason: "CONTENT_TYPE_NOT_SPECIFIED" };
         }
-        let random_id = Math.round(Math.random() * 1000);
+        let random_id = parseInt(new Date().getTime() + "" + Math.round(Math.random() * 1000))
         if (type === "text") {
             let text = content.text;
             if (!text) {
@@ -73,30 +79,58 @@ class User {
             let params = { peer: { _: "inputPeerUser", user_id: this.id, access_hash: this.access_hash }, message: text, random_id };
             try {
                 let result = await mtproton.call("messages.sendMessage", params);
+                fs.writeFileSync("mes.json", JSON.stringify(result));
                 return { success: true, result };
             } catch (error) {
                 return { success: false, reason: error };
             }
         }
     }
+    async notifyError(mtproton, reason) {
+        let content = {
+            type: "text",
+            text: serviceMessageTexts.tryAgain.replace(/\%reason\%/g, reason)
+        }
+        let sendMessageResult = await this.sendMessage(mtproton, content);
+        return sendMessageResult;
+    }
     updateLastRegistrationMessage(message_code, message_id) {
         this.lastRegistrationMessage = {
-            code: message_code,
+            field: message_code,
             id: message_id
         }
     }
-    validate(fieldName, value) {
-        if (!(fieldName && value)) {
-            return { success: false, reason: "FIELD_NAME_OR_VALUE_NOT_SPECIFIED" };
+    validate(field, value) {
+        if (!(field && value)) {
+            return { success: false, reason: "FIELD_OR_VALUE_NOT_SPECIFIED" };
         }
-        switch (fieldName) {
+        switch (field) {
             case "age":
                 let age = parseInt(value);
                 if (Number.isInteger(age) && age > validations.minAge) {
                     return { success: true, result: true, value: age };
                 } else {
-                    return { success: true, result: false, message: `Age must be a number greater than ${validations.minAge}` };
+                    return { success: true, result: false, message: `Age must be a number greater than or equal to ${validations.minAge}.` };
                 }
+            case "phone":
+                let phoneFormat = /^\+?\d{10,13}$/;
+                if (phoneFormat.test(value)) {
+                    return { success: true, result: true, value };
+                } else {
+                    return { success: true, result: false, message: `Phone number must be 10-13 digit number.` };
+                }
+            case "confirm":
+                try {
+                    let confirm = value.toLowerCase();
+                    if (confirm === "yes" || confirm === "no") {
+                        return { success: true, result: true, value: confirm };
+                    } else {
+                        throw "";
+                    }
+                } catch (error) {
+                    return { success: true, result: false, message: `Only Yes and No are acceptable` };
+                }
+
             default:
                 return { success: true, result: true, value };
         }
